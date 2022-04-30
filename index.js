@@ -23,6 +23,7 @@ async function run() {
     await client.connect();
     const productCollection = client.db('gTech').collection('product');
 
+    // all products
     app.get('/product', async (req, res) => {
       const query = {};
       const cursor = productCollection.find(query);
