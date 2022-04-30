@@ -16,7 +16,7 @@ $ cd myapp
 Now you have to initializing the npm
 
 ```bash
-$ npm init -y
+npm init -y
 ```
 
 Here install `express`, middleware `cors`, database `mongodb`, security environmental variable `dotenv` (.env).
@@ -55,9 +55,7 @@ Either through cloning with git or by using [npm](http://npmjs.org) (the recomme
 ```bash
 npm install -g nodemon
 
-# or using yarn!
-
-yarn global add nodemon
+# or using yarn: yarn global add nodemon
 ```
 
 And nodemon will be installed globally to your system path.
