@@ -33,7 +33,7 @@ async function run() {
 
     app.get('/products/:id', async (req, res) => {
       const id = req.params.id;
-      console.log(id);
+      // console.log(id);
       const query = { _id: ObjectId(id) };
       const product = await productCollection.findOne(query);
       res.send(product);
