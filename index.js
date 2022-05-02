@@ -24,11 +24,19 @@ async function run() {
     const productCollection = client.db('gTech').collection('product');
 
     // all products
-    app.get('/product', async (req, res) => {
+    app.get('/products', async (req, res) => {
       const query = {};
       const cursor = productCollection.find(query);
       const products = await cursor.toArray();
       res.send(products);
+    });
+
+    app.get('/products/:id', async (req, res) => {
+      const id = req.params.id;
+      console.log(id);
+      const query = { _id: ObjectId(id) };
+      const product = await serviceCollection.findOne(query);
+      res.send(product);
     });
   } finally {
     // if you want to close database
@@ -38,9 +46,9 @@ async function run() {
 run().catch(console.dir);
 // for server testing purpose
 app.get('/', (req, res) => {
-  res.send('Hello World!');
+  res.send('Gtech Server is Running');
 });
 
 app.listen(port, () => {
-  console.log(`Server listening on port: ${port}`);
+  console.log(`Server listening http://localhost:${port}`);
 });
