@@ -2,7 +2,12 @@ const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
 const app = express();
-const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
+const {
+  MongoClient,
+  ServerApiVersion,
+  ObjectId,
+  ChangeStream,
+} = require('mongodb');
 
 const port = process.env.PORT || 5000;
 
@@ -37,6 +42,47 @@ async function run() {
       const query = { _id: ObjectId(id) };
       const product = await productCollection.findOne(query);
       res.send(product);
+    });
+
+    // update product
+    app.put('/products/:id', async (req, res) => {
+      const id = req.params.id;
+      console.log(id);
+      const updatedProduct = req.body;
+      console.log(updatedProduct);
+      const filter = { _id: ObjectId(id) };
+      const options = { upsert: true };
+      const updatedDoc = {
+        $set: {
+          quantity: updatedProduct.quantity,
+        },
+      };
+      const result = await productCollection.updateOne(
+        filter,
+        updatedDoc,
+        options
+      );
+      res.send(result);
+    });
+
+    app.put('/products/:id', async (req, res) => {
+      const id = req.params.id;
+      console.log(id);
+      const updatedProduct = req.body;
+      console.log(updatedProduct);
+      const filter = { _id: ObjectId(id) };
+      const options = { upsert: true };
+      const updatedDoc = {
+        $set: {
+          quantity: updatedProduct.newQuantity,
+        },
+      };
+      const result = await productCollection.updateOne(
+        filter,
+        updatedDoc,
+        options
+      );
+      res.send(result);
     });
   } finally {
     // if you want to close database
