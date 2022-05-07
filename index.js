@@ -36,18 +36,20 @@ async function run() {
       res.send(products);
     });
 
+    // single product
     app.get('/products/:id', async (req, res) => {
       const id = req.params.id;
       // console.log(id);
       const query = { _id: ObjectId(id) };
       const product = await productCollection.findOne(query);
+      console.log(product);
       res.send(product);
     });
 
     // post product data
     app.post('/products', async (req, res) => {
       const newProduct = req.body;
-      console.log('adding new Product', newProduct);
+      // console.log('adding new Product', newProduct);
       const result = await productCollection.insertOne(newProduct);
       res.send(result);
     });
@@ -55,9 +57,9 @@ async function run() {
     // update product
     app.put('/products/:id', async (req, res) => {
       const id = req.params.id;
-      console.log(id);
+      // console.log(id);
       const updatedProduct = req.body;
-      console.log(updatedProduct);
+      // console.log(updatedProduct);
       const filter = { _id: ObjectId(id) };
       const options = { upsert: true };
       const updatedDoc = {
@@ -77,9 +79,18 @@ async function run() {
     app.delete('/products/:id', async (req, res) => {
       const id = req.params.id;
       const query = { _id: ObjectId(id) };
-      console.log(id, query);
+      // console.log(id, query);
       const result = await productCollection.deleteOne(query);
       res.send(result);
+    });
+
+    app.get('/productsuser', async (req, res) => {
+      const email = req.query.email;
+      // console.log(email);
+      const query = { email: email };
+      const cursor = productCollection.find(query);
+      const productsuser = await cursor.toArray();
+      res.send(productsuser);
     });
   } finally {
     // if you want to close database
