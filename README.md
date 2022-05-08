@@ -1,4 +1,4 @@
-# Project Name:
+# Project Name: [Gtech](https://inventory-management-a11-1b6ab.web.app/)
 
 ## This is a Node.js server
 
