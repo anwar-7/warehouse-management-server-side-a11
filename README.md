@@ -32,11 +32,19 @@ const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
 const app = express();
+// came with mongodb API
+// const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 
 const port = process.env.PORT || 5000;
 
 // middleware
-app.use(cors());
+const corsConfig = {
+  origin: true,
+  credentials: true,
+};
+app.use(cors(corsConfig));
+app.options('*', cors(corsConfig));
+//app.use(cors())
 app.use(express.json());
 
 app.get('/', (req, res) => {
@@ -66,6 +74,7 @@ Go to your `package.json` file and add some scripts
 
 ```json
 "scripts": {
+  // copy only this...
     "start": "node index.js",
     "start-dev": "nodemon index.js",
 }
@@ -78,7 +87,7 @@ npm run start-dev
 ```
 
 Runs the app in the development mode.\
-Open [http://localhost:5000](http://localhost:5000) to view it in your browser.
+Open [http://localhost:5000/](http://localhost:5000/) to view it in your browser.
 
 The page will reload when you make changes.\
 You may also see any lint errors in the console.

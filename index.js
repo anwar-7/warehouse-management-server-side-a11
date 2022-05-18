@@ -13,6 +13,7 @@ const corsConfig = {
 };
 app.use(cors(corsConfig));
 app.options('*', cors(corsConfig));
+//app.use(cors())
 app.use(express.json());
 
 // mongodb
@@ -42,7 +43,7 @@ async function run() {
       // console.log(id);
       const query = { _id: ObjectId(id) };
       const product = await productCollection.findOne(query);
-      console.log(product);
+      // console.log(product);
       res.send(product);
     });
 
